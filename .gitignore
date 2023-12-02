@@ -38,3 +38,4 @@ next-env.d.ts
 .yarn
 
 firebase-key.json
+.env
