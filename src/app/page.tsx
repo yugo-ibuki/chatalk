@@ -1,7 +1,6 @@
 'use client'
 
 import {
-  Box,
   Button,
   Modal,
   ModalBody,
@@ -13,15 +12,36 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import { createQuestion } from '@/repositories/createQuestion'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import BeforeQuestion from '@/components/parts/BeforeQuestion'
+import { getQuestions } from '@/repositories/getQuestions'
+import Link from 'next/link'
 
 export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [questionNumber, setQuestionNumber] = useState<number>(3)
+  const [questionId, setQuestionId] = useState<string>('')
+  // const [questions, setQuestions] = useState<{ question: string }[]>([])
   const onClick = async () => {
-    await createQuestion()
-    onClose()
+    try {
+      console.log(questionNumber)
+      const id = await createQuestion(questionNumber)
+      if (!id) {
+        throw new Error('id is not defined')
+      }
+      setQuestionId(id)
+      onClose()
+    } catch (error) {
+      console.error(error)
+    }
   }
+
+  // useEffect(() => {
+  //   ;(async () => {
+  //     const data = await getQuestions(questionId)
+  // setQuestions(data!.questions)
+  // })()
+  // }, [questionNumber, questionId, getQuestions])
 
   return (
     <main>
@@ -32,10 +52,10 @@ export default function Home() {
           <Modal isOpen={isOpen} onClose={onClose} size="sm">
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>Modal Title</ModalHeader>
+              <ModalHeader>交流ボード作成</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <BeforeQuestion />
+                <BeforeQuestion setQuestionNumber={setQuestionNumber} />
               </ModalBody>
 
               <ModalFooter>
@@ -48,6 +68,26 @@ export default function Home() {
               </ModalFooter>
             </ModalContent>
           </Modal>
+        </div>
+
+        <div>
+          {questionId && (
+            <div className="mt-10 text-center leading-10">
+              <div>交流ボードのURL</div>
+              <div>
+                こちらのリンクを共有してください。
+                <Link href={`/${questionId}`} className="text-emerald-600">
+                  {window.document.URL}
+                  {questionId}
+                </Link>
+              </div>
+            </div>
+          )}
+          {/*{questions.map((question, index) => (*/}
+          {/*  <div key={index}>*/}
+          {/*    <div>{question.question}</div>*/}
+          {/*  </div>*/}
+          {/*))}*/}
         </div>
       </div>
     </main>
