@@ -14,17 +14,15 @@ import {
 import { createQuestion } from '@/repositories/createQuestion'
 import React, { useEffect, useState } from 'react'
 import BeforeQuestion from '@/components/parts/BeforeQuestion'
-import { getQuestions } from '@/repositories/getQuestions'
 import Link from 'next/link'
 
 export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [questionNumber, setQuestionNumber] = useState<number>(3)
   const [questionId, setQuestionId] = useState<string>('')
-  // const [questions, setQuestions] = useState<{ question: string }[]>([])
+
   const onClick = async () => {
     try {
-      console.log(questionNumber)
       const id = await createQuestion(questionNumber)
       if (!id) {
         throw new Error('id is not defined')
@@ -83,11 +81,6 @@ export default function Home() {
               </div>
             </div>
           )}
-          {/*{questions.map((question, index) => (*/}
-          {/*  <div key={index}>*/}
-          {/*    <div>{question.question}</div>*/}
-          {/*  </div>*/}
-          {/*))}*/}
         </div>
       </div>
     </main>
