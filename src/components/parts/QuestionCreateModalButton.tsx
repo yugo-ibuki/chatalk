@@ -11,7 +11,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from '@chakra-ui/react'
-import BeforeQuestion from '@/components/parts/BeforeQuestion'
+import { BeforeQuestion } from '@/components/parts'
 import { FC, useState } from 'react'
 import { createQuestion } from '@/repositories/createQuestion'
 
