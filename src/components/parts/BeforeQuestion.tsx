@@ -5,7 +5,7 @@ type Props = {
   setQuestionNumber: (value: number) => void
 }
 
-const BeforeQuestion: FC<Props> = ({ setQuestionNumber }) => {
+export const BeforeQuestion: FC<Props> = ({ setQuestionNumber }) => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = parseInt(event.target.value, 10)
     console.log(value)
@@ -26,5 +26,3 @@ const BeforeQuestion: FC<Props> = ({ setQuestionNumber }) => {
     </div>
   )
 }
-
-export default BeforeQuestion
