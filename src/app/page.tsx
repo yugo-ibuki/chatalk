@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { QuestionCreateModalButton } from '@/components/parts/QuestionCreateModalButton'
+import { QuestionCreateModalButton } from '@/components/parts'
 
 export default function Home() {
   const [questionId, setQuestionId] = useState<string>('')
