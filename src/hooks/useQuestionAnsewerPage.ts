@@ -1,11 +1,20 @@
 import { useParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { getQuestions } from '@/repositories/getQuestions'
+import { useForm } from 'react-hook-form'
 
 export const useQuestionAnsewerPage = () => {
   const params = useParams()
   const [questions, setQuestions] = useState<{ question: string }[]>([])
   const [error, setError] = useState<Error | null>(null)
+
+  const form = useForm({ mode: 'onChange' })
+
+  const onSubmit = useCallback(() => {
+    form.handleSubmit(async (data) => {
+      console.log(data)
+    })
+  }, [form])
 
   useEffect(() => {
     ;(async () => {
@@ -18,5 +27,5 @@ export const useQuestionAnsewerPage = () => {
     })()
   }, [getQuestions])
 
-  return { questions, error }
+  return { questions, error, onSubmit, form }
 }
