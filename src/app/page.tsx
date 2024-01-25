@@ -7,13 +7,6 @@ import { QuestionCreateModalButton } from '@/components/parts'
 export default function Home() {
   const [questionId, setQuestionId] = useState<string>('')
 
-  // useEffect(() => {
-  //   ;(async () => {
-  //     const data = await getQuestions(questionId)
-  // setQuestions(data!.questions)
-  // })()
-  // }, [questionNumber, questionId, getQuestions])
-
   return (
     <main>
       <div className="mt-10">
