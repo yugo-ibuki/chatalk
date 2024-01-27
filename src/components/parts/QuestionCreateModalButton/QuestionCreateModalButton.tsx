@@ -14,6 +14,7 @@ import {
 import { BeforeQuestion } from '@/components/parts'
 import { FC, useState } from 'react'
 import { createQuestion } from '@/repositories/createQuestion'
+// import { createAnswerFrame } from '@/repositories/createAnswer'
 
 type Props = {
   setQuestionId: (questionNumber: string) => void

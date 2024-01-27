@@ -7,6 +7,8 @@ import {
   serverTimestamp,
   doc,
   getDoc,
+  setDoc,
+  updateDoc,
 } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -22,4 +24,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
-export { app, db, collection, addDoc, getDocs, serverTimestamp, doc, getDoc }
+export { app, db, collection, addDoc, setDoc, getDocs, serverTimestamp, doc, getDoc, updateDoc }
