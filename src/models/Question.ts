@@ -1,3 +1,3 @@
 export type Question = {
-  questions: string[]
+  [key: string]: string
 }
