@@ -8,7 +8,6 @@ const Page = () => {
   const { formState, register } = form
 
   if (error) return <div>エラーが発生しました</div>
-  console.log(form.formState.errors)
 
   return (
     <Box margin={'30px auto'} padding={'0 20px'}>
@@ -24,6 +23,10 @@ const Page = () => {
                   maxLength: {
                     value: 100,
                     message: '100文字以内で入力してください',
+                  },
+                  minLength: {
+                    value: 1,
+                    message: '1文字以上で入力してください',
                   },
                 })}
               />
