@@ -8,7 +8,6 @@ type Props = {
 export const BeforeQuestion: FC<Props> = ({ setQuestionNumber }) => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = parseInt(event.target.value, 10)
-    console.log(value)
     if (!isNaN(value)) {
       setQuestionNumber(value)
     }

@@ -4,7 +4,6 @@ import { getQuestions } from '@/repositories/getQuestions'
 import { useForm } from 'react-hook-form'
 import { Question } from '@/models'
 import { createAnswer } from '@/repositories/createAnswer'
-import { checkAnswer } from '@/repositories/checkAnswer'
 
 export const useQuestionAnswerPage = () => {
   const params = useParams()
@@ -14,11 +13,13 @@ export const useQuestionAnswerPage = () => {
 
   const form = useForm<Question>({ mode: 'onChange' })
 
-  const onSubmit = useCallback(async () => {
-    const isAlreadyAnswered = await checkAnswer(questionId)
-    const player = isAlreadyAnswered ? 'player2' : 'player1'
-    await createAnswer(player, questionId, form.getValues())
-  }, [form, questionId])
+  const player1Submit = useCallback(async () => {
+    await createAnswer('player1', questionId, form.getValues())
+  }, [form.getValues, questionId])
+
+  const player2Submit = useCallback(async () => {
+    await createAnswer('player1', questionId, form.getValues())
+  }, [form.getValues, questionId])
 
   useEffect(() => {
     ;(async () => {
@@ -33,5 +34,5 @@ export const useQuestionAnswerPage = () => {
     })()
   }, [getQuestions])
 
-  return { questions, error, onSubmit, form }
+  return { questions, error, form, player1Submit, player2Submit }
 }
