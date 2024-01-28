@@ -1,10 +1,10 @@
 'use client'
 
 import { Box, Button, Input, Stack, Text } from '@chakra-ui/react'
-import { useQuestionAnsewerPage } from '@/hooks/useQuestionAnsewerPage'
+import { useQuestionAnswerPage } from '@/hooks/useQuestionAnsewerPage'
 
 const Page = () => {
-  const { questions, error, onSubmit, form } = useQuestionAnsewerPage()
+  const { questions, error, onSubmit, form } = useQuestionAnswerPage()
   const { formState, register } = form
 
   if (error) return <div>エラーが発生しました</div>
@@ -12,32 +12,28 @@ const Page = () => {
   return (
     <Box margin={'30px auto'} padding={'0 20px'}>
       <Stack width={'100%'} alignItems={'center'} justifyContent={'center'}>
-        <form onSubmit={onSubmit}>
+        <form>
           {questions.map((question, index) => (
             <Stack key={index} gap={3} marginY={5} width={'400px'}>
               <Text>{question.question}</Text>
               <Input
                 type="text"
                 id={'question' + index}
-                {...register('question' + index, {
+                {...register(`question${index.toString()}`, {
+                  required: '回答は必須です',
                   maxLength: {
                     value: 100,
                     message: '100文字以内で入力してください',
                   },
-                  minLength: {
-                    value: 1,
-                    message: '1文字以上で入力してください',
-                  },
                 })}
               />
               {/* エラー */}
-              {formState.errors['question' + index] ? (
-                // @ts-ignore
-                <Text color={'red'}>{formState.errors['question' + index]?.message}</Text>
+              {formState.errors ? (
+                <Text color={'red'}>{formState.errors[`question${index}`]?.message}</Text>
               ) : null}
             </Stack>
           ))}
-          <Button type="submit" marginY={5}>
+          <Button marginY={5} isDisabled={!formState.isValid} onClick={onSubmit}>
             回答する
           </Button>
         </form>
