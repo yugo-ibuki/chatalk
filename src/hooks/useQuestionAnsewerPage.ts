@@ -18,7 +18,7 @@ export const useQuestionAnswerPage = () => {
   }, [form.getValues, questionId])
 
   const player2Submit = useCallback(async () => {
-    await createAnswer('player1', questionId, form.getValues())
+    await createAnswer('player2', questionId, form.getValues())
   }, [form.getValues, questionId])
 
   useEffect(() => {
