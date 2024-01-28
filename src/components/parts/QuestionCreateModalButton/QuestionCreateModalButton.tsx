@@ -14,25 +14,31 @@ import {
 import { BeforeQuestion } from '@/components/parts'
 import { FC, useState } from 'react'
 import { createQuestion } from '@/repositories/createQuestion'
+import { useRouter } from 'next/navigation'
 
 type Props = {
-  setQuestionId: (questionNumber: string) => void
+  setLoading: (isLoading: boolean) => void
 }
 
-export const QuestionCreateModalButton: FC<Props> = ({ setQuestionId }) => {
+export const QuestionCreateModalButton: FC<Props> = ({ setLoading }) => {
+  const { push } = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [questionNumber, setQuestionNumber] = useState<number>(3)
 
   const onClick = async () => {
+    setLoading(true)
+
     try {
       const id = await createQuestion(questionNumber)
       if (!id) {
         throw new Error('id is not defined')
       }
-      setQuestionId(id)
       onClose()
+      push(`/${id}/player1`)
     } catch (error) {
       console.error(error)
+    } finally {
+      setLoading(false)
     }
   }
 
