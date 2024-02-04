@@ -10,7 +10,7 @@ const Page = () => {
     player2Url,
     questions,
     error,
-    player1Submit,
+    onSubmit,
     form: { formState, register },
     onCopy,
     hasCopied,
@@ -61,7 +61,7 @@ const Page = () => {
                 ) : null}
               </Stack>
             ))}
-            <Button marginY={5} isDisabled={!formState.isValid} onClick={player1Submit}>
+            <Button marginY={5} isDisabled={!formState.isValid} onClick={() => onSubmit('player1')}>
               回答する
             </Button>
           </form>

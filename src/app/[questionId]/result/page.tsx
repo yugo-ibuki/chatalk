@@ -1,37 +1,56 @@
 'use client'
 
 import { useResultPage } from '@/hooks/useResultPage'
-import { useParams } from 'next/navigation'
-import { Box, Flex, Stack, Text } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Center, Flex, HStack, Spinner, Stack, Text } from '@chakra-ui/react'
+import React, { FC } from 'react'
+import { AnsweredQuestion } from '@/models'
 
 const Page = () => {
-  const params = useParams()
-  const { answers } = useResultPage({ questionId: params.questionId as string })
+  const { answers, loading, isBothAnswered } = useResultPage()
+
+  if (loading)
+    return (
+      <Center height="100vh">
+        <Spinner />
+      </Center>
+    )
+
   return (
-    <div>
-      {answers?.questions.map((answer) => (
-        <Box key={answer.question} mt={'4rem'} textAlign={'center'}>
-          <Stack gap={2}>
-            <Text fontSize={'1.5rem'}>{answer.question}</Text>
-            <Flex gap={5} justifyContent={'center'}>
-              <Stack>
-                <Text color={'blue'} fontSize={'1.2rem'}>
-                  Player1 の回答
-                </Text>
-                <Text fontSize={'1.7rem'}>{answer.answer.player1}</Text>
-              </Stack>
-              <Stack>
-                <Text color={'blue'} fontSize={'1.2rem'}>
-                  Player2 の回答
-                </Text>
-                <Text fontSize={'1.7rem'}>{answer.answer.player2}</Text>
-              </Stack>
-            </Flex>
+    <Box px="3rem">
+      {isBothAnswered
+        ? answers?.questions.map((answer, i) => (
+            <AnswerRow
+              key={answer.question + i}
+              question={answer.question}
+              answer={answer.answer}
+            />
+          ))
+        : '回答が揃っていません。少し待ってから再度アクセスしてください。'}
+    </Box>
+  )
+}
+
+const AnswerRow: FC<{ question: string; answer: AnsweredQuestion }> = ({ question, answer }) => {
+  return (
+    <Box mt={'4rem'} textAlign={'center'}>
+      <Stack gap={2}>
+        <Text fontSize={'1.5rem'}>{question}</Text>
+        <HStack gap={5} justifyContent={'center'}>
+          <Stack w="50%">
+            <Text color={'blue'} fontSize={'1.2rem'}>
+              Player1 の回答
+            </Text>
+            <Text fontSize={'1.7rem'}>{answer.player1}</Text>
           </Stack>
-        </Box>
-      ))}
-    </div>
+          <Stack w="50%">
+            <Text color={'blue'} fontSize={'1.2rem'}>
+              Player2 の回答
+            </Text>
+            <Text fontSize={'1.7rem'}>{answer.player2}</Text>
+          </Stack>
+        </HStack>
+      </Stack>
+    </Box>
   )
 }
 
