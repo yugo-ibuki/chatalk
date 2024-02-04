@@ -7,6 +7,7 @@ import { createAnswer } from '@/repositories/createAnswer'
 
 export const useQuestionAnswerPage = () => {
   const params = useParams()
+  const questionIdParam = params.questionId as string
   const [questions, setQuestions] = useState<Question[]>([])
   const [questionId, setQuestionId] = useState<string>('')
   const [error, setError] = useState<Error | null>(null)
@@ -27,12 +28,12 @@ export const useQuestionAnswerPage = () => {
         setError(new Error('Invalid ID'))
         return
       }
-      const data = await getQuestions(params.questionId)
-      setQuestionId(params.questionId)
+      const data = await getQuestions(questionIdParam)
+      setQuestionId(questionIdParam)
       // error handling
       setQuestions(data!.questions)
     })()
-  }, [getQuestions])
+  }, [getQuestions, questionIdParam])
 
   return { questions, error, form, player1Submit, player2Submit }
 }
