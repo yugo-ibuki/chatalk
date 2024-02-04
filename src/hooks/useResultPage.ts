@@ -2,16 +2,18 @@ import { getAnswers } from '@/repositories/getAnswers'
 import { useEffect, useState } from 'react'
 import { Answer } from '@/models'
 import { getQuestions } from '@/repositories/getQuestions'
+import { useParams } from 'next/navigation'
 
-type Props = {
-  questionId: string
-}
-
-export const useResultPage = ({ questionId }: Props) => {
+export const useResultPage = () => {
+  const params = useParams()
+  const questionId = params.questionId as string
   const [answers, setAnswers] = useState<Answer>()
+  const isBothAnswered = answers?.questions.every((q) => q.answer.player1 && q.answer.player2)
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     ;(async () => {
+      setLoading(true)
       try {
         const answers = await getAnswers({ questionId })
         const questionData = await getQuestions(questionId)
@@ -30,9 +32,9 @@ export const useResultPage = ({ questionId }: Props) => {
               }
             }),
           }
-          console.log(data)
           setAnswers(data)
         }
+        setLoading(false)
       } catch (error) {
         console.error(error)
       }
@@ -41,5 +43,7 @@ export const useResultPage = ({ questionId }: Props) => {
 
   return {
     answers,
+    loading,
+    isBothAnswered,
   }
 }

@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { Question } from '@/models'
 import { createAnswer } from '@/repositories/createAnswer'
 import { useClipboard } from '@chakra-ui/hooks'
+import { checkAnswer } from '@/repositories/checkAnswer'
 
 export const useQuestionAnswerPage = () => {
   // router
@@ -28,15 +29,21 @@ export const useQuestionAnswerPage = () => {
   // エラー
   const [error, setError] = useState<Error | null>(null)
 
-  const player1Submit = useCallback(async () => {
-    await createAnswer('player1', questionId, form.getValues())
-    push(`/${questionId}/result`)
-  }, [form.getValues, questionId])
-
-  const player2Submit = useCallback(async () => {
-    await createAnswer('player2', questionId, form.getValues())
-    push(`/${questionId}/result`)
-  }, [form.getValues, questionId])
+  const onSubmit = useCallback(
+    async (playerType: string) => {
+      try {
+        const isAnswered = await checkAnswer(questionId)
+        await createAnswer(playerType, isAnswered, questionId, form.getValues())
+        push(`/${questionId}/result`)
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err)
+        }
+        console.error(err)
+      }
+    },
+    [form.getValues, questionId]
+  )
 
   const onCopy = useCallback(() => {
     const domain = new URL(window.document.URL).origin
@@ -63,8 +70,7 @@ export const useQuestionAnswerPage = () => {
     questions,
     error,
     form,
-    player1Submit,
-    player2Submit,
+    onSubmit,
     onCopy,
     hasCopied,
   }

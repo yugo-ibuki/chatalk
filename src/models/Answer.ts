@@ -1,9 +1,11 @@
 export type Answer = {
   questions: {
     question: string
-    answer: {
-      player1: string
-      player2: string
-    }
+    answer: AnsweredQuestion
   }[]
+}
+
+export type AnsweredQuestion = {
+  player1: string
+  player2: string
 }

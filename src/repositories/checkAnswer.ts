@@ -8,5 +8,6 @@ export const checkAnswer = async (questionId: string) => {
     return docSnap.exists()
   } catch (err) {
     console.error(err)
+    throw new Error('送信時にエラーが発生しました。もう一度お試しください。')
   }
 }
