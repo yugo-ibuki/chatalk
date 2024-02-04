@@ -1,4 +1,4 @@
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import { getQuestions } from '@/repositories/getQuestions'
 import { useForm } from 'react-hook-form'
@@ -7,6 +7,9 @@ import { createAnswer } from '@/repositories/createAnswer'
 import { useClipboard } from '@chakra-ui/hooks'
 
 export const useQuestionAnswerPage = () => {
+  // router
+  const { push } = useRouter()
+
   // URLパラメータからquestionIdを取得
   const params = useParams()
   const questionIdParam = params.questionId as string
@@ -27,10 +30,12 @@ export const useQuestionAnswerPage = () => {
 
   const player1Submit = useCallback(async () => {
     await createAnswer('player1', questionId, form.getValues())
+    push(`/${questionId}/result`)
   }, [form.getValues, questionId])
 
   const player2Submit = useCallback(async () => {
     await createAnswer('player2', questionId, form.getValues())
+    push(`/${questionId}/result`)
   }, [form.getValues, questionId])
 
   const onCopy = useCallback(() => {
