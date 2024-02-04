@@ -33,11 +33,11 @@ export const useQuestionAnswerPage = () => {
     await createAnswer('player2', questionId, form.getValues())
   }, [form.getValues, questionId])
 
-  const onCopy = () => {
+  const onCopy = useCallback(() => {
     const domain = new URL(window.document.URL).origin
     setValue(domain + player2Url)
     onChakraCopy()
-  }
+  }, [window.document.URL, setValue, onChakraCopy, player2Url])
 
   useEffect(() => {
     ;(async () => {
