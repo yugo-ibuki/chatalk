@@ -37,7 +37,6 @@ export const QuestionCreateModalButton: FC<Props> = ({ setLoading }) => {
       push(`/${id}/player1`)
     } catch (error) {
       console.error(error)
-    } finally {
       setLoading(false)
     }
   }

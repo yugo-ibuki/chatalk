@@ -3,9 +3,11 @@
 import React, { useState } from 'react'
 import { QuestionCreateModalButton } from '@/components/parts'
 import { Center, Spinner } from '@chakra-ui/react'
+import { useTopPage } from '@/hooks/useTopPage'
 
 export default function Home() {
-  const [loading, setLoading] = useState<boolean>(false)
+  const { loading, setLoading } = useTopPage()
+
   return (
     <main>
       <div className="mt-10">
