@@ -1,19 +1,20 @@
 'use client'
 
-import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { Box, Button, Input, Stack, Text } from '@chakra-ui/react'
 import { useQuestionAnswerPage } from '@/hooks/useQuestionAnsewerPage'
 
 const Page = () => {
   const {
+    questionId,
+    player2Url,
     questions,
     error,
     player1Submit,
     form: { formState, register },
+    onCopy,
+    hasCopied,
   } = useQuestionAnswerPage()
-  const params = useParams()
-  const questionId = params.questionId
 
   if (error) return <div>エラーが発生しました</div>
 
@@ -24,9 +25,16 @@ const Page = () => {
           <div>交流ボードのURL</div>
           <div>
             <p>こちらのリンクを共有してください。</p>
-            <Link href={`/${questionId}/player2`} className="text-emerald-600">
-              Player 2
-            </Link>
+            <Stack>
+              <div>
+                <Link href={player2Url} className="text-emerald-600">
+                  Player 2
+                </Link>
+              </div>
+              <div>
+                <Button onClick={onCopy}>{hasCopied ? 'コピーしました' : 'URLをコピー'}</Button>
+              </div>
+            </Stack>
           </div>
         </div>
       )}
