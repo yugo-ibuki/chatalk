@@ -16,7 +16,7 @@ const Page = () => {
 
   return (
     <Box px="3rem">
-      {isBothAnswered
+      {isBothAnswered && answers?.questions
         ? answers?.questions.map((answer, i) => (
             <AnswerRow
               key={answer.question + i}
