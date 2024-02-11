@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Provider from '@/app/provider'
-import Header from '@/components/layouts/Header'
+import { Header } from '@/components/layouts/Header'
+import { Footer } from '@/components/layouts/Footer'
 
 export const metadata: Metadata = {
   title: 'chatalk',
@@ -14,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Header />
         <Provider>{children}</Provider>
+        <Footer />
       </body>
     </html>
   )

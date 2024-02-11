@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 
-const Header = () => {
+export const Header = () => {
   return (
     <header>
       <div className="border-b-2">
@@ -15,5 +15,3 @@ const Header = () => {
     </header>
   )
 }
-
-export default Header
