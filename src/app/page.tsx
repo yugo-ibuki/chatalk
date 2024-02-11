@@ -9,7 +9,7 @@ export default function TopPage() {
 
   return (
     <main>
-      <div className="mt-10">
+      <div className="my-10">
         {loading ? (
           <Center>
             <Spinner />
